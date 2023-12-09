@@ -61,7 +61,7 @@ print(last_active_user["PasswordLastUsed"])
 Do the following manually to prepare your AWS region for the script execution 
 - open the SSH port 22 in the default security group in your default VPC 
 - create key-pair for your ec2 instance. Download the private key of the key-pair and set its access permission to 400 mode
-- set the values for: image_id, key_name, instance_type and ssh_privat_key_path in your python script.    
+- set the values for: image_id, key_name, instance_type and ssh_private_key_path in your python script.    
 ```
 
 ```sh
@@ -78,12 +78,12 @@ ec2_client = boto3.client('ec2')
 
 # set all needed variable values
 
-image_id = 'ami-031eb8d942193d84f'
+image_id = 'ami-id'
 key_name = 'boto3-server-key'
 instance_type = 't2.small'
 
 # the pem file must have restricted 400 permissions: chmod 400 absolute-path/boto3-server-key.pem
-ssh_privat_key_path = '/Users/nanajanashia/Downloads/boto3-server-key.pem' 
+ssh_private_key_path = '/Users/nana/Downloads/boto3-server-key.pem' 
 ssh_user = 'ec2-user'
 ssh_host = '' # will be set dynamically below
 
