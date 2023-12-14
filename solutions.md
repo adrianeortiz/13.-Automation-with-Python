@@ -58,9 +58,9 @@ print(last_active_user["PasswordLastUsed"])
 
 ```sh
 # Pre requisites
-Do the following manually to prepare your AWS region for the script execution 
+Do the following manually to prepare your AWS region for the script execution: 
 - open the SSH port 22 in the default security group in your default VPC 
-- create key-pair for your ec2 instance. Download the private key of the key-pair and set its access permission to 400 mode
+- create a key-pair for your ec2 instance. Download the private key of the key-pair and set its access permission to 400 mode
 - set the values for: image_id, key_name, instance_type and ssh_privat_key_path in your python script.    
 ```
 
@@ -83,7 +83,7 @@ key_name = 'boto3-server-key'
 instance_type = 't2.small'
 
 # the pem file must have restricted 400 permissions: chmod 400 absolute-path/boto3-server-key.pem
-ssh_privat_key_path = '/Users/nanajanashia/Downloads/boto3-server-key.pem' 
+ssh_private_key_path = '/Users/nana/Downloads/boto3-server-key.pem' 
 ssh_user = 'ec2-user'
 ssh_host = '' # will be set dynamically below
 
@@ -181,7 +181,7 @@ print("Connecting to the server")
 print(f"public ip: {ssh_host}")
 ssh = paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-ssh.connect(hostname=ssh_host, username=ssh_user, key_filename=ssh_privat_key_path)
+ssh.connect(hostname=ssh_host, username=ssh_user, key_filename=ssh_private_key_path)
 
 # install docker & start nginx 
 for command in commands_to_execute:
@@ -218,7 +218,7 @@ def restart_container():
     print('Restarting the application...')
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect(hostname=ssh_host, username=ssh_user, key_filename=ssh_privat_key_path)
+    ssh.connect(hostname=ssh_host, username=ssh_user, key_filename=ssh_private_key_path)
     stdin, stdout, stderr = ssh.exec_command('docker start nginx')
     print(stdout.readlines())
     ssh.close()
@@ -328,7 +328,7 @@ pip install requests
 
 **Code**
 ```sh
-# In jenkins folder, you will find the Jenkinsfile that executes 3 python scripts for different stages:
+# In exercise repo you will find the Jenkinsfile that executes 3 python scripts for different stages:
 - get-images.py
 - deploy.py
 - validate.py
